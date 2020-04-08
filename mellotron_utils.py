@@ -19,10 +19,10 @@ PHONEME2GRAPHEME = {
     'AY': ['i'],
     'EH': ['e', 'ae'],
     'EY': ['a', 'ai', 'ei', 'e', 'y'],
-    'IH': ['i', 'e'],
+    'IH': ['i', 'e', 'y'],
     'IX': ['e', 'i'],
     'IY': ['ea', 'ey', 'y', 'i'],
-    'OW': ['oa'],
+    'OW': ['oa', 'o'],
     'OY': ['oy'],
     'UH': ['oo'],
     'UW': ['oo', 'u', 'o'],
@@ -367,13 +367,6 @@ def events2eventsarpabet(event):
             k += 2
         else:
             k += 1
-
-    if len(event) == 1:
-        if len(word_arpabet) > 1:
-            raise Exception("More characters in {} than in {}".format(
-                word, word_arpabet))
-        token_a, freq_a, start_time_a, end_time_a = event[i]
-        new_events.append([word_arpabet[0], freq_a, start_time_a, end_time_a])
 
     # add extensions and pauses at end of words
     while i < len(event):

@@ -2,7 +2,6 @@ import random
 import os
 import re
 import numpy as np
-import vamp
 import torch
 import torch.utils.data
 import librosa
@@ -76,7 +75,7 @@ class TextMelLoader(torch.utils.data.Dataset):
     def get_mel_and_f0(self, filepath):
         audio, sampling_rate = load_wav_to_torch(filepath)
         if sampling_rate != self.stft.sampling_rate:
-            raise ValueError("{} {} SR doesn't match target {} SR".format(
+            raise ValueError("{} SR doesn't match target {} SR".format(
                 sampling_rate, self.stft.sampling_rate))
         audio_norm = audio / self.max_wav_value
         audio_norm = audio_norm.unsqueeze(0)
@@ -93,7 +92,8 @@ class TextMelLoader(torch.utils.data.Dataset):
 
     def get_text(self, text):
         text_norm = torch.IntTensor(
-            text_to_sequence(text, self.text_cleaners, self.cmudict))
+            text_to_sequence(text, self.text_cleaners, self.cmudict, self.p_arpabet))
+
         return text_norm
 
     def __getitem__(self, index):
